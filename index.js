@@ -9,7 +9,7 @@ const followRoute = require("./routes/follow");
 const cloudinary = require("cloudinary").v2
 
 env.config();
-app.use(express.json());
+app.use(express.json()); 
 
 const cloudinaryConfig = cloudinary.config({
   cloud_name: process.env.CLOUDNAME,
@@ -50,6 +50,13 @@ app.get("/api/get-signature", (req, res) => {
   res.json({ timestamp, signature })
 })
 
+
+app.use("*",(req,res,next)=>{
+  res.status(404).json({
+    status:"Fail",
+    message:`Can't Find ${req.originalUrl}`
+  })
+})
 const port = process.env.PORT || 5000
 
 //server port
