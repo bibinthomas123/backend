@@ -7,9 +7,11 @@ const usersRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const followRoute = require("./routes/follow");
 const cloudinary = require("cloudinary").v2
+const morgan = require("morgan")
 
 env.config();
 app.use(express.json()); 
+app.use(morgan("dev"))
 
 const cloudinaryConfig = cloudinary.config({
   cloud_name: process.env.CLOUDNAME,
@@ -34,7 +36,7 @@ mongoose
   app.use("/api/auth", authRoute);
   app.use("/api/users", usersRoute);
   app.use("/api/posts", postRoute);
-  app.use("/api/v1", followRoute);
+  app.use("/api/", followRoute);
   
   
 //for image storage
